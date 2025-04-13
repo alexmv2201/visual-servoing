@@ -1,0 +1,369 @@
+Gear_Large:
+  Ground_Truth_BBox:
+  - 363.4122314453125
+  - 171.45455932617188
+  - 231.25721740722656
+  - 223.6793212890625
+  Manual_offset:
+  - 0.0
+  - 0.0045
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Gear_Large/Gear_Large.png
+  gripper:
+  - 65
+  - 42
+  Approximated Position:
+  - 0.15
+  - 0.45
+  - 1.25
+  specific_height:
+  - 0.08084393090364261
+  - 0.0502
+  superior_pos:
+  - Object_loader
+Gear_Medium:
+  Ground_Truth_BBox:
+  - 357.5291748046875
+  - 149.12265014648438
+  - 167.7403564453125
+  - 164.84375
+  Manual_offset:
+  - 0.002
+  - 0.002
+  - 0.0
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Gear_Medium/Gear_Medium.png
+  gripper:
+  - 58
+  - 38
+  Approximated Position:
+  - 0.05
+  - 0.55
+  - 1.2
+  specific_height:
+  - 0.06434493637156535
+  - 0.0407
+  superior_pos:
+  - Object_loader
+Gear_Shaft:
+  Ground_Truth_BBox:
+  - 358.8379821777344
+  - 263.4039306640625
+  - 38.2041015625
+  - 56.94847106933594
+  Manual_offset:
+  - 0.0
+  - 0.002
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Gear_Shaft/Gear_Shaft.png
+  gripper:
+  - 65
+  - 42
+  Approximated Position:
+  - 0.65
+  - 0.38
+  - 1.4
+  specific_height:
+  - 0.08052730219818706
+  - 0.03
+  superior_pos:
+  - Task_board
+Gear_Small:
+  Ground_Truth_BBox:
+  - 352.2503662109375
+  - 123.5538330078125
+  - 97.3505859375
+  - 113.89425659179688
+  Manual_offset:
+  - 0.002
+  - 0.0015
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Gear_Small/Gear_Small.png
+  gripper:
+  - 43
+  - 27
+  Approximated Position:
+  - 0.1
+  - 0.55
+  - 1.2
+  specific_height:
+  - 0.0543918841922371
+  - 0.0312
+  superior_pos:
+  - Object_loader
+Ket_Square_12:
+  Ground_Truth_BBox:
+  - 361.6081237792969
+  - 122.24728393554688
+  - 59.63623046875
+  - 116.14068603515625
+  Manual_offset:
+  - 0.001
+  - 0.001
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Ket_Square_12/Ket_Square_12.png
+  gripper:
+  - 42
+  - 25
+  Approximated Position:
+  - 0.12
+  - 0.50
+  - 1.16
+  rotation:
+  - true
+  specific_height:
+  - 0.06890136383252787
+  - 0.0227
+  superior_pos:
+  - Object_loader
+Ket_Square_12_Female:
+  Ground_Truth_BBox:
+  - 359.4478759765625
+  - 178.53321838378906
+  - 42.1884765625
+  - 17.772552490234375
+  Manual_offset:
+  - -0.002
+  - 0.0
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Ket_Square_12_Female/Ket_Square_12_Female.png
+  gripper:
+  - 43
+  - 25
+  Approximated Position:
+  - 0.6
+  - 0.53
+  - 1.16
+  rotation:
+  - true
+  specific_height:
+  - 0.07504460917881883
+  - 0.07
+  superior_pos:
+  - Task_board
+Ket_Square_16:
+  Ground_Truth_BBox:
+  - 351.23126220703125
+  - 119.13664245605469
+  - 41.9708251953125
+  - 129.07223510742188
+  Manual_offset:
+  - 0.0
+  - -0.001
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Ket_Square_8/Ket_Square_8.png
+  gripper:
+  - 43
+  - 20
+  Approximated Position:
+  - 0.12
+  - 0.5
+  - 1.16
+  rotation:
+  - true
+  specific_height:
+  - 0.0686184501075321
+  - 0.0223
+  superior_pos:
+  - Object_loader
+Ket_Square_8:
+  Ground_Truth_BBox:
+  - 351.23126220703125
+  - 119.13664245605469
+  - 41.9708251953125
+  - 129.07223510742188
+  Manual_offset:
+  - 0.0
+  - -0.001
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Ket_Square_8/Ket_Square_8.png
+  gripper:
+  - 43
+  - 20
+  Approximated Position:
+  - 0.12
+  - 0.5
+  - 1.16
+  rotation:
+  - true
+  specific_height:
+  - 0.0686184501075321
+  - 0.0223
+  superior_pos:
+  - Object_loader
+Ket_Square_8_Female:
+  Ground_Truth_BBox:
+  - 353.1695556640625
+  - 203.92005920410156
+  - 30.21044921875
+  - 16.758148193359375
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Ket_Square_8_Female/Ket_Square_8_Female.png
+  gripper:
+  - 43
+  - 25
+  Approximated Position:
+  - 0.36
+  - 0.39
+  - 1.16
+  rotation:
+  - true
+  Manual_offset:
+  - -0.0005
+  - 0.0018
+  - -0.04
+  specific_height:
+  - 0.07161366459977137
+  - 0.07
+  superior_pos:
+  - Task_board
+M16_Nut:
+  Ground_Truth_BBox:
+  - 352.9653625488281
+  - 126.16725158691406
+  - 106.5968017578125
+  - 120.25790405273438
+  Manual_offset:
+  - 0.0005
+  - 0.002
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/M16_Nut/M16_Nut.png
+  gripper:
+  - 60
+  - 32
+  Approximated Position:
+  - 0.1
+  - 0.5
+  - 1.16
+  rotation:
+  - true
+  specific_height:
+  - 0.05410670943317787
+  - 0.0385
+  superior_pos:
+  - Object_loader
+M16_Screw:
+  Ground_Truth_BBox:
+  - 355.3729248046875
+  - 151.22970581054688
+  - 63.1416015625
+  - 72.21762084960938
+  Manual_offset:
+  - -0.0005
+  - 0.0045
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/M16_Screw/M16_Screw.png
+  gripper:
+  - 60
+  - 32
+  Approximated Position:
+  - 0.65
+  - 0.28
+  - 1.16
+  specific_height:
+  - 0.06447962084486027
+  - 0.03657
+  superior_pos:
+  - Task_board
+Object_loader:
+  Approximated Position:
+  - 0.1
+  - 0.5
+  - 1.25
+Task_board:
+  Approximated Position:
+  - 0.55
+  - 0.35
+  - 1.25
+USB_Female:
+  Ground_Truth_BBox:
+  - 358.6885986328125
+  - 205.17181396484375
+  - 63.57568359375
+  - 123.2921142578125
+  Manual_offset:
+  - -0.0017
+  - 0.002
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/USB_Female/USB_Female.png
+  gripper:
+  - 45
+  - 28
+  Approximated Position:
+  - 0.5
+  - 0.55
+  - 1.16
+  rotation:
+  - true
+  specific_height:
+  - 0.11280116826614561
+  - 0.04
+  superior_pos:
+  - Task_board
+USB_Male:
+  Ground_Truth_BBox:
+  - 361.1225891113281
+  - 98.38101196289062
+  - 67.27813720703125
+  - 119.86309814453125
+  Manual_offset:
+  - 0.0008
+  - 0.0003
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/USB_Male/USB_Male.png
+  gripper:
+  - 45
+  - 28
+  Approximated Position:
+  - 0.05
+  - 0.65
+  - 1.2
+  rotation:
+  - true
+  specific_height:
+  - 0.05478375686923709
+  - 0.021
+  superior_pos:
+  - Object_loader
+Waterproof_Female:
+  Ground_Truth_BBox:
+  - 360.72528076171875
+  - 339.77996826171875
+  - 106.28778076171875
+  - 208.030029296875
+  Manual_offset:
+  - 0.002
+  - 0.00
+  - -0.0
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Waterproof_Female/Waterproof_Female.png
+  gripper:
+  - 65
+  - 37
+  Approximated Position:
+  - 0.47
+  - 0.42
+  - 1.2
+  rotation:
+  - true
+  specific_height:
+  - 0.13508524077474848
+  - 0.04
+  superior_pos:
+  - Task_board
+Waterproof_Male:
+  Ground_Truth_BBox:
+  - 362.10113525390625
+  - 151.4434814453125
+  - 139.8336181640625
+  - 242.970458984375
+  Manual_offset:
+  - 0.002
+  - -0.001
+  - -0.02
+  Zielpose: /home/alex/ur_ws/src/rotation_estimation/Task Board information/Zielposen/Waterproof_Male/Waterproof_Male.png
+  gripper:
+  - 65
+  - 37
+  Approximated Position:
+  - 0.05
+  - 0.5
+  - 1.2
+  rotation:
+  - true
+  specific_height:
+  - 0.07872941474738959
+  - 0.04
+  superior_pos:
+  - Object_loader
+start_position:
+  Approximated Position:
+  - 0.2
+  - 0.5
+  - 1.26
