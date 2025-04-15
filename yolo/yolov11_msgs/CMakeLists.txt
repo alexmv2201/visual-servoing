@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(yolov8_msgs)
+project(yolov11_msgs)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -21,7 +21,7 @@ find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
     "msg/InferenceResult.msg"
-    "msg/Yolov8Inference.msg"
+    "msg/Yolov11Inference.msg"
     DEPENDENCIES std_msgs
  )
 ament_export_dependencies(rosidl_default_runtime)

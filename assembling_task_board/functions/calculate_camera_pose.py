@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 def estimate_camera_pose(yolo_data, Z_c, yaw, offset_x, offset_y, offset_z):
-   
+    # Funktion teilweise unnötig (solvePnP hier unnötig). Muss überarbeitet werden. 
     # Camera parameters
     Z_c = (Z_c - 0.04)/np.cos(np.radians(15)) 
     print(f"Höhe: {Z_c}")

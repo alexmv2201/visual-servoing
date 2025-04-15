@@ -50,24 +50,16 @@ class Lightning(Node):
             10)
     
         self.bool_match_images = False
-
         self.yolo_result = None
-
         self.current_object = None
-
         self.ground_Truth_data = None
-
         self.get_Camera_image = False
-
         self.image_path = None
-
         self.valid_Bbox_data = None
-
         self.bbox_data = None
         self.last_bbox_data = []
         self.center_x = None
         self.center_y = None
-
         self.x_min, self.y_min, self.x_max, self.y_max = None, None, None, None
         self.x_min_2, self.y_min_2, self.x_max_2, self.y_max_2 = None, None, None, None
 
@@ -125,11 +117,11 @@ class Lightning(Node):
         # Step 2: Find the object closest to the ground truth bounding box
         best_object = None
         if self.current_object == "Gear_Shaft":
-            best_distance = 20  # Track closest distance to ground truth bbox center
+            best_distance = 20  # Define maximal distance to ground truth bbox center
         elif self.current_object == "Waterproof_Female":
-            best_distance = 120
+            best_distance = 120 # Define maximal distance to ground truth bbox center
         else:
-            best_distance = 45
+            best_distance = 45 # Define maximal distance to ground truth bbox center
 
         for obj in objects:
             bbox_center_x, bbox_center_y, _, _, prob = obj
@@ -196,8 +188,6 @@ class Lightning(Node):
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
             # Read the image
-
-
             image0 = cv2.imread(self.image_path)
 
             def apply_bounding_box(image, x_min, x_max, y_min, y_max):
@@ -243,8 +233,6 @@ class Lightning(Node):
             # Convert to PyTorch tensor
             image0 = numpy_image_to_torch(image0).to(device)
 
-            
-
             # Crop the image
             image1 = image1[y1:y2, x1:x2]
 
@@ -269,8 +257,6 @@ class Lightning(Node):
             m_kpts0, m_kpts1 = kpts0[matches[..., 0]], kpts1[matches[..., 1]]
 
             # Define ROI and Check if Keypoints are Within the ROI**
-            #x_min, x_max, y_min, y_max = 60, 140, 0, 200  # Bottom-right corner of the ROI
-            #x_min_2, x_max_2, y_min_2, y_max_2 = 50, 150, 0, 200
             safety_2 = 3
             print(x_min, x_max, y_min, y_max, x_min_2, x_max_2, y_min_2, y_max_2)
             
@@ -327,8 +313,8 @@ class Lightning(Node):
             # Compute Rotation Matrix using Homography**
             pts0 = np.float32(filtered_kpts0)
             pts1 = np.float32(filtered_kpts1)
-
             affine_matrix, inliers = cv2.estimateAffine2D(pts0, pts1, ransacReprojThreshold=5.0)
+
             # Calculate the translations for each point pair
             translations = pts1 - pts0  # Shape: (N, 2)
 
@@ -348,15 +334,10 @@ class Lightning(Node):
                 ]
                 final_median_x = np.median(filtered_translations[:, 0])
                 final_median_y = np.median(filtered_translations[:, 1])
-            # Check if all points are the same
-
-
-
+            
             # Extract the rotation angle from the affine transformation matrix
             rotation_matrix = affine_matrix[:2, :2]
             angle = np.degrees(np.arctan2(rotation_matrix[1, 0], rotation_matrix[0, 0]))
-
-
             self.get_logger().info(f"Estimated rotation angle: {angle} degrees")
             self.get_logger().info(f"Verschiebung x richtung: {final_median_x}, Verschiebung y-achse {final_median_y}")
             rotation_msg = Float32MultiArray(data = [angle, final_median_x, final_median_y])
@@ -368,11 +349,6 @@ class Lightning(Node):
             msg.data = True
             self.get_logger().error(f"Error in calling_lightning: {e} calling it again")
             self.selfPublisher.publish(msg)
-
-            
-
-
-
 
 def main(args=None):
     rclpy.init(args=None)

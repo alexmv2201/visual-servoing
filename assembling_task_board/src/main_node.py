@@ -47,13 +47,10 @@ class MainNode(Node):
         # Subscriptions
         self.create_subscription(Pose, 'current_pose_publisher', self.current_pose_function, 10)
         self.create_subscription(Pose, 'target_pose_reached', self.target_pose_reached, 10)
-        #self.create_subscription(Float32MultiArray, '/Pose_inference_result_Assembly', self.yolo_callback, 10)
         self.create_subscription(Float32MultiArray, '/Pose_inference_result', self.yolo_callback, 10)
         self.create_subscription(Float32MultiArray, '/Lightning_rot_est', self.getLightningRotation_callback, 10)
-        #self.create_subscription(Bool, '/gripper_reached', self.gripper_reached_callback, 10)
-
         self.client = self.create_client(SwitchController, '/controller_manager/switch_controller')
-        self.controller = None
+      
     
         # Task board variables
         #self.object_list = ["Waterproof_Male", "Waterproof_Female", "Gear_Large", "Gear_Shaft", "Gear_Medium","Gear_Shaft", "Gear_Small","Gear_Shaft","Ket_Square_12", "Ket_Square_12_Female","USB_Male", "USB_Female","Ket_Square_12", "Ket_Square_12_Female","Ket_Square_8", "Ket_Square_8_Female", "M16_Nut", "M16_Screw"]
@@ -76,38 +73,26 @@ class MainNode(Node):
         self.object_before = None
         self.gripper_open = None
         self.gripper_close = None
-        self.manual_offset_x = None
-        self.manual_offset_y = None
-        self.manual_offset_angle = None
-        self.camera_offset_x = None
-        self.camera_offset_y = None
-        self.camera_offset_angle = None
 
-        # drive to object variables
-        self.yolo_finished_before_CNN = False
-        self.yolo_finished_after_CNN = False
+        self.controller = None
 
+        # Servoing variables
+        self.lambda_gain = 0.05
         self.asked_by_yolo = False
         self.storing_yolo_data = False
         self.estimated_object_pose = None
         self.yolo_data = None
         self.last_yolo_data = None
-
         self.new_yolo_data = False
         self.new_object = True
-
-        self.vs_tries = 0
-        self.got_gripper_callback = False
         self.x_target, self.y_target = None, None
         self.last_call_time = None
         self.asked_by_lightning = False
-        self.lightning_finished = False
-        
+        self.lightning_finished = False    
         self.last_small_angle = None  # Store the last small angle value
         self.angle_threshold_counter = 0  # Counter for detecting alternating signs
-
         self.lightning_close_to_finish = False
-        
+        self.vs_tries = 0
 
         # Assembling variables
         self.finished_object = True
@@ -121,9 +106,13 @@ class MainNode(Node):
         self.M16_screw_first = True
         self.Gear_Medium_first = True
         self.Gear_Small_first = True
+        self.manual_offset_x = None
+        self.manual_offset_y = None
+        self.manual_offset_angle = None
+        self.camera_offset_x = None
+        self.camera_offset_y = None
+        self.camera_offset_angle = None
         
-        self.test = False
-        self.cutit = False
         # Initialization steps
         self.get_logger().info("Will start other nodes")
         self.callGripper_open()
@@ -131,7 +120,6 @@ class MainNode(Node):
         msg.data = "activate:scaled_joint_trajectory_controller;deactivate:forward_position_controller"
         self.control_switcher_publisher.publish(msg)
         self.controller = "joint_trajectory_controller"
-        self.pause = False
         #time.sleep(10)
      
         if self.manual_start == False:
@@ -439,13 +427,6 @@ class MainNode(Node):
 
     def current_task_distributor(self):
         self.get_logger().info(f"Current Task distributor")
-        if self.pause == True:
-            return
-        if self.test == True:
-            if self.cutit == False:
-                self.spiral()
-                self.cutit = True
-            return
         if self.finished_object:
             self.get_logger().info(f"Finished Target Pose of Object: {self.current_object}")
             self.request_next_object()
@@ -613,7 +594,6 @@ class MainNode(Node):
                     self.safe_csv(path)
                     self.Trajectory_Gear_Large()
                 elif self.object_before == "Gear_Medium":
-                    self.pause = False
                     path = "/home/alex/Auswertung/Gear_Medium.csv"
                     if self.Gear_Medium_first == True:
                         self.safe_csv(path)
@@ -627,7 +607,6 @@ class MainNode(Node):
                         self.Trajectory_Gear_Medium()
 
                 elif self.object_before == "Gear_Small":
-                    self.pause = False
                     path = "/home/alex/Auswertung/Gear_Small.csv"
                     
                     if self.Gear_Small_first == True:
@@ -658,21 +637,17 @@ class MainNode(Node):
                     self.safe_csv(path)
                     self.Trajectory_USB_Female()
                 elif self.current_object == "Ket_Square_12_Female":
-                    self.pause = False
                     path = "/home/alex/Auswertung/Ket_12_Female.csv"
                     self.safe_csv(path)
                     self.Trajectory_Ket_12_Female()
                 elif self.current_object == "Waterproof_Female":
-                    self.pause = False
                     path = "/home/alex/Auswertung/Waterproof.csv"
                     self.safe_csv(path)
                     self.Trajectory_Waterproof_Female()
                 elif self.current_object == "Ket_Square_8_Female":
-                    self.pause = False
                     path = "/home/alex/Auswertung/Ket_8_Female.csv"
                     self.safe_csv(path)
                     self.Trajectory_Ket_8_Female()
-
                 return
 
             if self.going_up == True:
@@ -895,12 +870,6 @@ class MainNode(Node):
             bottom_height = self.Object_loader_height
         elif self.superior_object == "Task_board":
             bottom_height = self.Task_board_height
-
-        # Exit if lightning process is finished
-        if self.lightning_finished:
-            self.get_logger().info("Lightning finished")
-            self.Last_aligning(self.current_pose)
-            return
         
         # Convert quaternion to Euler angles and adjust yaw
         _, _, yaw = self.quaternion_to_euler(
@@ -913,7 +882,6 @@ class MainNode(Node):
         x, y, _, _ = np.array(self.yolo_data)[:4]
         error_x = self.x_target - x
         error_y = self.y_target - y
-        #self.get_logger().info(f"Error X: {error_x}, Error Y: {error_y}")
 
         # Image and camera parameters
         horizontal_fov = 1.2054
@@ -934,21 +902,15 @@ class MainNode(Node):
             error_y = min(480, error_y)
             #self.get_logger().info(f"Adjusted Error Y: {error_y}, Scaling Factor: {scaling_factor}")
 
-        # Estimate depth and construct interaction matrix
+        # Compute the control law
         Z = self.current_pose.position.z - (bottom_height) + 0.05
-        # simplified image jacobian
         L_s = np.array([
             [-1/Z, 0],
             [0, -1/Z]
         ])
-
-        # Compute the control law
         L_s_pseudo_inv = np.linalg.pinv(L_s)
         error_vector = np.array([error_x, error_y])
-        lambda_gain = 0.05
-        v_s = -lambda_gain * np.dot(L_s_pseudo_inv, error_vector)
-
-        # Extract velocities
+        v_s = -self.lambda_gain * np.dot(L_s_pseudo_inv, error_vector)
         v_x, v_y = v_s
 
         # Scale error_z with damping factor

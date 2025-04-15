@@ -6,8 +6,6 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 import os
-from yolov8_msgs.msg import InferenceResult
-from yolov8_msgs.msg import Yolov8Inference
 from std_msgs.msg import Float32MultiArray, String
 import cv2
 import ament_index_python.packages
@@ -21,8 +19,7 @@ class CameraSubscriber(Node):
         super().__init__('camera_subscriber')
         yolo_path = os.path.join(package_path, 'scripts','active_gazebo_Model', 'active.pt')
         self.model = YOLO(yolo_path)
-        
-        self.yolov8_inference = Yolov8Inference()
+
         self.process_images = False
         self.positions = []
         self.max_attempts = 5
@@ -64,7 +61,6 @@ class CameraSubscriber(Node):
             self.take_pose_image_callback,
             10)
 
-        self.yolov8_pub = self.create_publisher(Yolov8Inference, "/Yolov8_Inference", 1)
         self.img_pub = self.create_publisher(Image, "/inference_result", 1)
         self.results_publisher = self.create_publisher(Float32MultiArray, "/Pose_inference_result", 1)
         self.results_publisher_Assembly = self.create_publisher(Float32MultiArray, "/Pose_inference_result_Assembly", 1)
@@ -209,10 +205,6 @@ class CameraSubscriber(Node):
             self.get_logger().info(f'Calling take pose image')
             self.take_pose_image = False
             self.take_pose_images(img)
-            
-
-        self.yolov8_inference.header.frame_id = "inference"
-        self.yolov8_inference.header.stamp = self.get_clock().now().to_msg()
 
         # YOLOv8 inference
         results = self.model(img)
@@ -232,14 +224,6 @@ class CameraSubscriber(Node):
 
                 # Store all detections matching self.object
                 if detected_class_name == self.object:
-                    self.inference_result = InferenceResult()
-                    self.inference_result.class_name = detected_class_name
-                    self.inference_result.top = int(b[0])
-                    self.inference_result.left = int(b[1])
-                    self.inference_result.bottom = int(b[2])
-                    self.inference_result.right = int(b[3])
-                    self.yolov8_inference.yolov8_inference.append(self.inference_result)
-
                     center_x = (b[0] + b[2]) / 2.0
                     center_y = (b[1] + b[3]) / 2.0
                     length = b[2] - b[0]
@@ -256,8 +240,7 @@ class CameraSubscriber(Node):
         annotated_frame = results[0].plot()
         img_msg = bridge.cv2_to_imgmsg(annotated_frame)
         self.img_pub.publish(img_msg)
-        self.yolov8_pub.publish(self.yolov8_inference)
-        self.yolov8_inference.yolov8_inference.clear()
+
 
         # Return if no images need processing
         if not self.process_images:
