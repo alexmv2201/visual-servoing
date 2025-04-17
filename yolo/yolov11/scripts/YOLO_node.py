@@ -208,10 +208,6 @@ class CameraSubscriber(Node):
             self.take_pose_image = False
             self.take_pose_images(img)
             
-
-        self.yolov8_inference.header.frame_id = "inference"
-        self.yolov8_inference.header.stamp = self.get_clock().now().to_msg()
-
         # YOLOv8 inference
         results = self.model(img)
         best_detection = None
