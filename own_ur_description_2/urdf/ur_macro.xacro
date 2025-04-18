@@ -474,7 +474,7 @@
     
     
     <joint name="camera_joint" type="fixed">
-<origin xyz="0.0 0.06 0.045" rpy="1.5707 -1.5707 0.0"/>
+<origin xyz="0.0 0.065 0.05" rpy="1.5707 -1.5707 0.0"/>
         <parent link="wrist_3_link"/>
         <child link="camera_link"/>        
     </joint>
