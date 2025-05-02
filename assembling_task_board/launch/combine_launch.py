@@ -57,5 +57,5 @@ def generate_launch_description():
         lightning_node,
         control_switcher_node,
         twister_node,
-        gripper_node
+        #gripper_node
     ])
