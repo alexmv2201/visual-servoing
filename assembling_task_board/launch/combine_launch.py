@@ -43,10 +43,19 @@ def generate_launch_description():
         output="screen",
     )
     
+       
+    # Gripper Node
+    gripper_node = Node(
+        package="assembling_task_board",
+        executable="gripper_node",
+        output="screen",
+    )
+    
     return LaunchDescription([
         realsense_launch,
         yolo_node,
         lightning_node,
         control_switcher_node,
-        twister_node
+        twister_node,
+        gripper_node
     ])
